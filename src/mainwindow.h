@@ -3,6 +3,10 @@
 
 #include <QMainWindow>
 #include <QPainter>
+#include <QTextEdit>
+#include <QMessageBox>
+
+#include "canvas.h"
 
 namespace Ui {
 class MainWindow;
@@ -12,7 +16,8 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-    QWidget *canvas;
+    Canvas *canvas;
+    QTextEdit *edit;
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -20,7 +25,12 @@ public:
 
 private:
     Ui::MainWindow *ui;
+public slots:
+    void writeHitTime(float t)
+    {
 
+        edit->append("Czas: " + QString::number(t));
+    }
 };
 
 #endif // MAINWINDOW_H

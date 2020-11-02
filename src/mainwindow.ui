@@ -18,7 +18,7 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QTextBrowser" name="textBrowser">
+       <widget class="QTextEdit" name="textEdit">
         <property name="enabled">
          <bool>true</bool>
         </property>
@@ -28,10 +28,13 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item>
-       <widget class="Canvas" name="widget" native="true">
+       <widget class="Canvas" name="canvas" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>

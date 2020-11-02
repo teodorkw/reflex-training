@@ -7,7 +7,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    canvas = findChild<QWidget*>("widget");
+    canvas = findChild<Canvas*>("canvas");
+    edit = findChild<QTextEdit*>("textEdit");
+
+    connect(canvas, &Canvas::hit, this, &MainWindow::writeHitTime); // stary sposob nie dziala
 }
 
 MainWindow::~MainWindow()
