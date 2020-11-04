@@ -1,6 +1,10 @@
 #include "canvas.h"
 
-Canvas::Canvas(QWidget *parent) : QWidget(parent), diameter(100), x(100), y(100)
+Canvas::Canvas(QWidget *parent) : QWidget(parent), diameter(100), operate(false)
 {
-    srand(time(0));
+
+
+    setFixedSize(500, 500);
+
+
 }

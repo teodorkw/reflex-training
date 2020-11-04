@@ -7,14 +7,24 @@
     <x>0</x>
     <y>0</y>
     <width>782</width>
-    <height>520</height>
+    <height>588</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="Controls" name="controls" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>60</height>
+       </size>
+      </property>
+     </widget>
+    </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
@@ -154,6 +164,12 @@
    <class>Canvas</class>
    <extends>QWidget</extends>
    <header>canvas.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Controls</class>
+   <extends>QWidget</extends>
+   <header>controls.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

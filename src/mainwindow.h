@@ -7,6 +7,8 @@
 #include <QMessageBox>
 
 #include "canvas.h"
+#include "controls.h"
+#include "model.h"
 
 namespace Ui {
 class MainWindow;
@@ -16,8 +18,16 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+    enum State
+    {
+        IDLE, PREPARE, GAME
+    }state;
+
     Canvas *canvas;
     QTextEdit *edit;
+    Controls *controls;
+
+    Model model;
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -25,12 +35,13 @@ public:
 
 private:
     Ui::MainWindow *ui;
+signals:
+    void setXY(float x, float y);
+    void operate(bool o);
 public slots:
-    void writeHitTime(float t)
-    {
+    void reportHit();
+    void prepare();     // after clicking Start button
 
-        edit->append("Czas: " + QString::number(t));
-    }
 };
 
 #endif // MAINWINDOW_H
