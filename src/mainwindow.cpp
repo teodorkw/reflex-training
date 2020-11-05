@@ -17,7 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, &MainWindow::setXY, canvas, &Canvas::setXY_slot);
     connect(this, &MainWindow::operate, canvas, &Canvas::switchOperate);
 
-    connect(controls, &Controls::started, this, &MainWindow::prepare);
+    connect(controls, &Controls::started, this, &MainWindow::started);
+    connect(controls, &Controls::stopped, this, &MainWindow::stopped);
 }
 
 MainWindow::~MainWindow()
@@ -33,27 +34,32 @@ void MainWindow::reportHit()
         break;
     case PREPARE:
         model.startTimer();
-        emit setXY(model.getX(), model.getY());
-
-        state = GAME;
+        emit setXY(model.getX(), model.getY(), model.getDiameter());
+        state = RUNNING;
         break;
-    case GAME:
+    case RUNNING:
         model.stopTimer();
         model.startTimer();
-        emit setXY(model.getX(), model.getY());
+        emit setXY(model.getX(), model.getY(), model.getDiameter());
         edit->append("Czas: " + QString::number(model.getLastTime()));
         break;
     }
 
 
 }
-void MainWindow::prepare()
+void MainWindow::started()
 {
     if(state == IDLE)
     {
         state = PREPARE;
         emit operate(true);
+        emit setXY(model.getX(), model.getY(), model.getDiameter());
     }
+}
+void MainWindow::stopped()
+{
+    state = IDLE;
+    emit operate(false);
 }
 
 /*void MainWindow::startStop()

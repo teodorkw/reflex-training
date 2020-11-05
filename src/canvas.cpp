@@ -1,6 +1,6 @@
 #include "canvas.h"
 
-Canvas::Canvas(QWidget *parent) : QWidget(parent), diameter(100), operate(false)
+Canvas::Canvas(QWidget *parent) : QWidget(parent), diameter(100), operate(false), firstHit(true)
 {
 
 

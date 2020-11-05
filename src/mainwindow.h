@@ -20,7 +20,7 @@ class MainWindow : public QMainWindow
 
     enum State
     {
-        IDLE, PREPARE, GAME
+        IDLE, PREPARE, RUNNING
     }state;
 
     Canvas *canvas;
@@ -36,12 +36,12 @@ public:
 private:
     Ui::MainWindow *ui;
 signals:
-    void setXY(float x, float y);
+    void setXY(float x, float y, float d);
     void operate(bool o);
 public slots:
     void reportHit();
-    void prepare();     // after clicking Start button
-
+    void started();     // after clicking Start button
+    void stopped();
 };
 
 #endif // MAINWINDOW_H

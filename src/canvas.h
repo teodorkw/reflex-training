@@ -14,7 +14,7 @@ class Canvas : public QWidget
 
     float diameter;
     float x, y;
-    bool operate;
+    bool operate, firstHit;
 
 public:
     explicit Canvas(QWidget *parent = nullptr);
@@ -24,7 +24,15 @@ public:
         if(operate)
         {
             QPainter painter(this);
+
             painter.drawEllipse(x, y, diameter, diameter);
+            //painter.drawText(50, 50, QString::fromStdString(std::to_string(x) + " " + std::to_string(y)));
+            if(firstHit)
+            {
+                painter.setPen(Qt::black);
+                painter.drawText(width()/2, 50, "Prepare");
+                firstHit = false;
+            }
         }
     }
 
@@ -45,14 +53,16 @@ public:
 signals:
     void hit();      // propagates distance
 public slots:
-    void setXY_slot(float xx, float yy)
+    void setXY_slot(float xx, float yy, float dd)
     {
         x = xx;
         y = yy;
+        diameter = dd;
     }
     void switchOperate(bool o)
     {
         operate = o;
+        firstHit = true;
         update();
     }
 };

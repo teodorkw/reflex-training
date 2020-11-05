@@ -6,13 +6,14 @@
 #include <type_traits>
 #include <cmath>
 #include <cstdlib>
+#include <QDebug>
 
 class Model
 {
     clock_t start;
     float x, y, x_prev, y_prev;
     int canvasSize;
-    float diameter = 50;
+    float diameter;
     std::vector<float> times;
     std::vector<float> distances;
 
@@ -23,8 +24,8 @@ public:
         start = clock();
         x_prev = x;
         y_prev = y;
-        x = rand() % static_cast<int>(canvasSize - diameter);
-        y = rand() % static_cast<int>(canvasSize - diameter);
+        x = rand() % (canvasSize - static_cast<int>(diameter));
+        y = rand() % (canvasSize - static_cast<int>(diameter));
     }
     void stopTimer()
     {
@@ -32,7 +33,6 @@ public:
         times.push_back(static_cast<float>(ticks)/CLOCKS_PER_SEC);
         float d = sqrt(pow(x - x_prev, 2) + pow(y - y_prev, 2));
         distances.push_back(d);
-
     }
     const std::vector<float> &getTimes()
     {
@@ -62,6 +62,10 @@ public:
     float getY()
     {
         return y;
+    }
+    float getDiameter()
+    {
+        return diameter;
     }
 };
 
