@@ -6,6 +6,8 @@
 #include <type_traits>
 #include <cmath>
 #include <cstdlib>
+#include <fstream>
+
 #include <QDebug>
 
 class Model
@@ -66,6 +68,19 @@ public:
     float getDiameter()
     {
         return diameter;
+    }
+    bool saveFile(const std::string &fileName)
+    {
+        std::ofstream f(fileName, std::ios::trunc);
+        if(!f.is_open())
+            return false;
+        f << "times" << ',' << "distances" << '\n';
+        for(int i = 0; i < times.size(); ++i)
+        {
+            f << times[i] << ',' << distances[i] << '\n';
+        }
+        f.close();
+        return true;
     }
 };
 

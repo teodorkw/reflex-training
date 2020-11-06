@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(controls, &Controls::started, this, &MainWindow::started);
     connect(controls, &Controls::stopped, this, &MainWindow::stopped);
+    connect(controls, &Controls::saved, this, &MainWindow::saved);
 }
 
 MainWindow::~MainWindow()
@@ -41,7 +42,7 @@ void MainWindow::reportHit()
         model.stopTimer();
         model.startTimer();
         emit setXY(model.getX(), model.getY(), model.getDiameter());
-        edit->append("Czas: " + QString::number(model.getLastTime()));
+        edit->append("Time: " + QString::number(model.getLastTime()) + ", distance: " + QString::number(model.getLastDistance()));
         break;
     }
 
@@ -60,6 +61,11 @@ void MainWindow::stopped()
 {
     state = IDLE;
     emit operate(false);
+}
+void MainWindow::saved()
+{
+    QString fName = QFileDialog::getSaveFileName(nullptr, "Save", ".", "CSV file (*.csv);;All files (*.*)");
+    model.saveFile(fName.toStdString());
 }
 
 /*void MainWindow::startStop()

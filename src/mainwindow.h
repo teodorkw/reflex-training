@@ -5,6 +5,7 @@
 #include <QPainter>
 #include <QTextEdit>
 #include <QMessageBox>
+#include <QFileDialog>
 
 #include "canvas.h"
 #include "controls.h"
@@ -42,6 +43,7 @@ public slots:
     void reportHit();
     void started();     // after clicking Start button
     void stopped();
+    void saved();
 };
 
 #endif // MAINWINDOW_H

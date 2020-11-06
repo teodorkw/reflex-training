@@ -42,7 +42,7 @@
   <widget class="QPushButton" name="plotButton">
    <property name="geometry">
     <rect>
-     <x>190</x>
+     <x>280</x>
      <y>10</y>
      <width>75</width>
      <height>23</height>
@@ -50,6 +50,19 @@
    </property>
    <property name="text">
     <string>Create plot</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="saveButton">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>10</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Save</string>
    </property>
   </widget>
  </widget>

@@ -14,6 +14,7 @@ class Controls : public QWidget
 
     QPushButton *startButton;
     QPushButton *stopButton;
+    QPushButton *saveButton;
     QPushButton *plotButton;
 
 public:
@@ -26,6 +27,7 @@ private:
 signals:
     started();
     stopped();
+    saved();
 };
 
 #endif // CONTROLS_H
