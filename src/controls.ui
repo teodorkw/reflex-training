@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>527</width>
     <height>300</height>
    </rect>
   </property>
@@ -42,7 +42,7 @@
   <widget class="QPushButton" name="plotButton">
    <property name="geometry">
     <rect>
-     <x>280</x>
+     <x>370</x>
      <y>10</y>
      <width>75</width>
      <height>23</height>
@@ -63,6 +63,19 @@
    </property>
    <property name="text">
     <string>Save</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="resetButton">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>10</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Reset</string>
    </property>
   </widget>
  </widget>

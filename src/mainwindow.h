@@ -2,14 +2,21 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QWindow>
 #include <QPainter>
 #include <QTextEdit>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QScatterSeries>
+#include <QtCharts/QChartView>
+#include <QtCharts/QValueAxis>
 
 #include "canvas.h"
 #include "controls.h"
 #include "model.h"
+
+QT_CHARTS_USE_NAMESPACE
 
 namespace Ui {
 class MainWindow;
@@ -44,6 +51,8 @@ public slots:
     void started();     // after clicking Start button
     void stopped();
     void saved();
+    void reset();
+    void plotted();
 };
 
 #endif // MAINWINDOW_H

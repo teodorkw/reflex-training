@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(controls, &Controls::started, this, &MainWindow::started);
     connect(controls, &Controls::stopped, this, &MainWindow::stopped);
     connect(controls, &Controls::saved, this, &MainWindow::saved);
+    connect(controls, &Controls::reset, this, &MainWindow::reset);
+    connect(controls, &Controls::plotted, this, &MainWindow::plotted);
 }
 
 MainWindow::~MainWindow()
@@ -64,8 +66,72 @@ void MainWindow::stopped()
 }
 void MainWindow::saved()
 {
+    state = IDLE;
     QString fName = QFileDialog::getSaveFileName(nullptr, "Save", ".", "CSV file (*.csv);;All files (*.*)");
     model.saveFile(fName.toStdString());
+}
+void MainWindow::reset()
+{
+    state = IDLE;
+    emit operate(false);
+    model.clearMeasures();
+    edit->clear();
+}
+void MainWindow::plotted()
+{
+    state = IDLE;
+    emit operate(false);
+
+    QLineSeries *times = new QLineSeries();
+    QLineSeries *distances = new QLineSeries();
+    QScatterSeries *s3 = new QScatterSeries();
+
+    auto t = model.getTimes();
+    auto d = model.getDistances();
+    int idx = 0;
+    for(int i = 0; i < t.size(); ++i)
+    {
+        times->append(i, t[i]);
+        distances->append(i, d[i]);
+        s3->append(d[i], t[i]);
+    }
+
+    QChart *chart = new QChart();
+    chart->legend()->hide();
+    chart->setTitle("Chart");
+    QValueAxis *axisX = new QValueAxis;
+    chart->addAxis(axisX, Qt::AlignBottom);
+
+    chart->addSeries(times);
+    chart->addSeries(distances);
+    //chart->addSeries(s3);
+
+    QValueAxis *axisT = new QValueAxis;
+    axisT->setLinePenColor(times->pen().color());
+    chart->addAxis(axisT, Qt::AlignLeft);
+    times->attachAxis(axisX);
+    times->attachAxis(axisT);
+
+    QValueAxis *axisD = new QValueAxis;
+    axisD->setLinePenColor(distances->pen().color());
+    chart->addAxis(axisD, Qt::AlignRight);
+    distances->attachAxis(axisX);
+    distances->attachAxis(axisD);
+
+    /*QValueAxis *axisS3 = new QValueAxis;
+    axisS3->setLinePenColor(s3->pen().color());
+    chart->addAxis(axisS3, Qt::AlignRight);
+    s3->attachAxis(axisX);
+    s3->attachAxis(axisS3);*/
+
+
+    QChartView *chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+
+    QMainWindow *window = new QMainWindow(this);    // on stack closes immediately
+    window->setCentralWidget(chartView);
+    window->resize(800, 600);
+    window->show();
 }
 
 /*void MainWindow::startStop()
