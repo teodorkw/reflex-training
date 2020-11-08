@@ -1,6 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#define MSGBOX(title, text) \
+    QMessageBox Msgbox; \
+    Msgbox.setWindowTitle(title); \
+    Msgbox.setText(text); \
+    Msgbox.exec(); \
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -76,6 +82,7 @@ void MainWindow::reset()
     emit operate(false);
     model.clearMeasures();
     edit->clear();
+
 }
 void MainWindow::plotted()
 {
@@ -91,15 +98,16 @@ void MainWindow::plotted()
     int idx = 0;
     for(int i = 0; i < t.size(); ++i)
     {
-        times->append(i, t[i]);
-        distances->append(i, d[i]);
+        times->append(i + 1, t[i]);
+        distances->append(i + 1, d[i]);
         s3->append(d[i], t[i]);
     }
 
     QChart *chart = new QChart();
     chart->legend()->hide();
-    chart->setTitle("Chart");
+    chart->setTitle("Stats");
     QValueAxis *axisX = new QValueAxis;
+    axisX->setTitleText("hit number");
     chart->addAxis(axisX, Qt::AlignBottom);
 
     chart->addSeries(times);
@@ -107,13 +115,17 @@ void MainWindow::plotted()
     //chart->addSeries(s3);
 
     QValueAxis *axisT = new QValueAxis;
+    axisT->setTitleText("time [s]");
     axisT->setLinePenColor(times->pen().color());
+    axisT->setTitleBrush(QBrush(times->pen().color()));
     chart->addAxis(axisT, Qt::AlignLeft);
     times->attachAxis(axisX);
     times->attachAxis(axisT);
 
     QValueAxis *axisD = new QValueAxis;
+    axisD->setTitleText("distance from previous target [px]");
     axisD->setLinePenColor(distances->pen().color());
+    axisD->setTitleBrush(QBrush(distances->pen().color()));
     chart->addAxis(axisD, Qt::AlignRight);
     distances->attachAxis(axisX);
     distances->attachAxis(axisD);
@@ -134,9 +146,3 @@ void MainWindow::plotted()
     window->show();
 }
 
-/*void MainWindow::startStop()
-{
-    QMessageBox Msgbox;
-    Msgbox.setText("test");
-    Msgbox.exec();
-}*/
